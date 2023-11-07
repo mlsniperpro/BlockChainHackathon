@@ -1,0 +1,13 @@
+{
+    "canisters": {
+        "app1": {
+            "type": "custom",
+            "main": "src/index.ts",
+            "candid": "src/index.did",
+            "build": "npx azle app1",
+            "wasm": ".azle/app1/app1.wasm",
+            "gzip": true
+        }
+    }
+}
+

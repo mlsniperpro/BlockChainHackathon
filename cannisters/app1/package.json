@@ -1,0 +1,16 @@
+{
+    "scripts": {
+        "dfx_install": "DFX_VERSION=0.15.1 sh -ci \"$(curl -fsSL https://sdk.dfinity.org/install.sh)\"",
+        "replica_start": "dfx start --background",
+        "replica_stop": "dfx stop",
+        "canister_deploy_local": "dfx deploy app1",
+        "canister_deploy_mainnet": "dfx deploy --network ic app1",
+        "canister_uninstall": "dfx canister uninstall-code app1",
+        "canister_call_get_message": "dfx canister call app1 getMessage",
+        "canister_call_set_message": "dfx canister call app1 setMessage '(\"Hello world!\")'"
+    },
+    "dependencies": {
+        "azle": "0.18.6"
+    }
+}
+
