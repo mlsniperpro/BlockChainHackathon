@@ -1,0 +1,9 @@
+service: () -> {
+    addStudentRecord: (record {fatherId:text; class:text; schoolId:opt text; ageAtRegistration:nat64; lastName:text; motherId:text; firstName:text}) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
+    assignStudentToSchool: (text, text) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
+    deleteStudentRecord: (text) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
+    getAllStudents: () -> (variant {Ok:vec record {upi:text; fatherId:text; class:text; createdAt:nat64; schoolId:opt text; ageAtRegistration:nat64; lastName:text; motherId:text; firstName:text}; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}}) query;
+    getStudentDetails: (text, text) -> (variant {Ok:record {fatherId:text; class:text; schoolId:opt text; ageAtRegistration:nat64; lastName:text; motherId:text; firstName:text}; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}}) query;
+    loginUser: (text, text) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}}) query;
+    registerUser: (record {id:text; username:text; role:text; passwordHash:text}, text) -> (variant {Ok:record {id:text; username:text; role:text; passwordHash:text}; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
+}

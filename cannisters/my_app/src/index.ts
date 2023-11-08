@@ -61,13 +61,12 @@ export default Canister({
   }
   ),
 
-  deleteMessage: update([text], Void,(id)=>{
-    const messageRequested = messageStorage.get(id);
+  deleteMessage: update([text], Result(Message, Error),(id)=>{
+    const messageRequested = messageStorage.remove(id);
    if("None" in messageRequested){
-    return;
+    return Err({ NotFound: "Message with ${id} not found}"});
   }
-  messageStorage.delete(id);
-  return;
+  return Ok(messageRequested.Some);
   }
   ),
 })

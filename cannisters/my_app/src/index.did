@@ -1,6 +1,6 @@
 service: () -> {
     addMessage: (record {title:text; body:text; attachment:text}) -> (variant {Ok:record {id:text; title:text; body:text; createdAt:nat64; updatedAt:opt nat64; attachment:text}; Err:variant {InvalidPayload:text; NotFound:text}});
-    deleteMessage: (text) -> ();
+    deleteMessage: (text) -> (variant {Ok:record {id:text; title:text; body:text; createdAt:nat64; updatedAt:opt nat64; attachment:text}; Err:variant {InvalidPayload:text; NotFound:text}});
     getMessage: (text) -> (variant {Ok:record {id:text; title:text; body:text; createdAt:nat64; updatedAt:opt nat64; attachment:text}; Err:variant {InvalidPayload:text; NotFound:text}}) query;
     getMessages: () -> (variant {Ok:vec record {id:text; title:text; body:text; createdAt:nat64; updatedAt:opt nat64; attachment:text}; Err:variant {InvalidPayload:text; NotFound:text}}) query;
     updateMessage: (text, record {title:text; body:text; attachment:text}) -> (variant {Ok:record {id:text; title:text; body:text; createdAt:nat64; updatedAt:opt nat64; attachment:text}; Err:variant {InvalidPayload:text; NotFound:text}});
