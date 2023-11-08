@@ -107,29 +107,15 @@ export default Canister({
   }),
 
   getStudentDetails: query(
-    [text, text],
+    [text],
     Result(StudentRecord, Error),
-    (upi, requesterId) => {
+    (upi) => {
       const studentRef = studentStorage.get(upi);
-      if (studentRef.None) {
+      if ("None" in studentRef) {
         return Err({ NotFound: `Student with UPI ${upi} not found` });
       }
-      const requesterRef = userStorage.get(requesterId);
-      if (requesterRef.None) {
-        return Err({ Unauthorized: "Invalid requester ID" });
-      }
-      const requester = requesterRef.Some;
       const student = studentRef.Some;
-
-      if (
-        isAdmin(requester.role) ||
-        requester.id === student.upi ||
-        isSchoolAdmin(requester.role, student.schoolId.Some)
-      ) {
-        return Ok(student);
-      }
-      const { motherId, fatherId, ...publicStudent } = student;
-      return Ok(publicStudent);
+      return Ok(student);
     }
   ),
 
