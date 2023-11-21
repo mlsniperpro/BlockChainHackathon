@@ -1,9 +1,47 @@
-service: () -> {
-    addStudentRecord: (record {fatherId:text; class:text; schoolId:opt text; ageAtRegistration:nat64; lastName:text; motherId:text; firstName:text}) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
-    assignStudentToSchool: (text, text) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
-    deleteStudentRecord: (text) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
-    getAllStudents: () -> (variant {Ok:vec record {upi:text; fatherId:text; class:text; createdAt:nat64; schoolId:opt text; ageAtRegistration:nat64; lastName:text; motherId:text; firstName:text}; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}}) query;
-    getStudentDetails: (text) -> (variant {Ok:record {fatherId:text; class:text; schoolId:opt text; ageAtRegistration:nat64; lastName:text; motherId:text; firstName:text}; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}}) query;
-    loginUser: (text, text) -> (variant {Ok:text; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}}) query;
-    registerUser: (record {id:text; username:text; role:text; passwordHash:text}, text) -> (variant {Ok:record {id:text; username:text; role:text; passwordHash:text}; Err:variant {InvalidPayload:text; NotFound:text; DuplicateRecord:text; Unauthorized:text}});
+type Error = variant {
+  InvaluserIdPayload : text;
+  NotFound : text;
+  InvaluserIdCredentials : text;
+  DuplicateRecord : text;
+  Unauthorized : text;
+};
+type Student = record {
+  id : text;
+  class : text;
+  createdAt : nat64;
+  motherName : text;
+  updatedAt : opt nat64;
+  schoolId : opt text;
+  fatherName : text;
+  ageAtRegistration : nat64;
+  lastName : text;
+  firstName : text;
+};
+type StudentPayload = record {
+  class : text;
+  motherName : text;
+  schoolId : opt text;
+  fatherName : text;
+  ageAtRegistration : nat64;
+  lastName : text;
+  firstName : text;
+};
+type User = record {
+  username : text;
+  userId : text;
+  createdAt : nat64;
+  role : text;
+  updatedAt : opt nat64;
+  passwordHash : text;
+};
+type UserPayload = record { username : text; role : text; passwordHash : text };
+type _AzleResult = variant { Ok : Student; Err : Error };
+type _AzleResult_1 = variant { Ok : text; Err : Error };
+type _AzleResult_2 = variant { Ok : User; Err : Error };
+service : () -> {
+  addStudentRecord : (StudentPayload) -> (_AzleResult);
+  deleteStudentRecord : (text) -> (_AzleResult_1);
+  getStudentDetails : (text) -> (_AzleResult) query;
+  loginUser : (text, text) -> (_AzleResult_1) query;
+  registerUser : (UserPayload) -> (_AzleResult_2);
 }
